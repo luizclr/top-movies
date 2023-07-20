@@ -21,10 +21,10 @@ export const BaseSidebar: React.FC<BaseSidebarProps> = ({
       <SidebarContent>
         <List>
           <ListItem>
-            <ListItemLink to={PATHS.HOME}>Home</ListItemLink>
+            <ListItemLink to={PATHS.HOME}>Movies</ListItemLink>
           </ListItem>
           <ListItem>
-            <ListItemLink to={PATHS.PROFILE}>Profile</ListItemLink>
+            <ListItemLink to="movies/1">Movie 1</ListItemLink>
           </ListItem>
           <ListItem gutters={true} onClick={handleLogoutClick}>
             Logout

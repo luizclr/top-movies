@@ -138,7 +138,7 @@ exports[`<Base /> should be able to mount <Base /> component 1`] = `
               class="c7"
               href="/"
             >
-              Home
+              Movies
             </a>
           </li>
           <li
@@ -146,9 +146,9 @@ exports[`<Base /> should be able to mount <Base /> component 1`] = `
           >
             <a
               class="c7"
-              href="/profile"
+              href="/movies/1"
             >
-              Profile
+              Movie 1
             </a>
           </li>
           <li

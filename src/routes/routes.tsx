@@ -6,8 +6,8 @@ import { Login } from "~/pages/login/login.container";
 import { PATHS } from "~/routes/paths";
 import { PrivateRoute } from "~/routes/private-route";
 
-const Home = lazy(async () => await import("~/pages/home/home"));
-const Profile = lazy(async () => await import("~/pages/profile/profile"));
+const Movies = lazy(async () => await import("~/pages/movies/movies"));
+const Movie = lazy(async () => await import("~/pages/movie/movie"));
 
 export const router = createBrowserRouter([
   {
@@ -21,11 +21,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: PATHS.HOME,
-        element: <PrivateRoute outlet={<Home />} />,
+        element: <PrivateRoute outlet={<Movies />} />,
       },
       {
-        path: PATHS.PROFILE,
-        element: <PrivateRoute outlet={<Profile />} />,
+        path: PATHS.MOVIE,
+        element: <PrivateRoute outlet={<Movie />} />,
       },
     ],
   },

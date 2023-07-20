@@ -1,5 +1,5 @@
 export const PATHS = {
   HOME: "/",
-  LOGIN: "/login",
-  PROFILE: "profile",
+  LOGIN: "login",
+  MOVIE: "movies/:id",
 };

@@ -1,13 +1,13 @@
 import { screen } from "@testing-library/react";
 
-import Home from "~/pages/home/home";
+import Movie from "~/pages/movie/movie";
 
 import { render } from "#/test-utils/render";
 
-describe("<Home />", () => {
-  it("should be able to mount <Home /> component", () => {
+describe("<Movie />", () => {
+  it("should be able to mount <Movie /> component", () => {
     // given
-    const { asFragment } = render(<Home />);
+    const { asFragment } = render(<Movie />);
 
     // when
     const sut = asFragment();
@@ -18,12 +18,12 @@ describe("<Home />", () => {
 
   it("should find page title", () => {
     // given
-    render(<Home />);
+    render(<Movie />);
 
     // when
-    const title = screen.getByText("Home");
+    const title = screen.getByText("Movie");
 
     // then
-    expect(title).toEqual("home");
+    expect(title).toEqual("Movie");
   });
 });
