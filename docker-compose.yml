@@ -1,9 +1,9 @@
 version: "3.8"
 
 services:
-  react-base:
-    image: react-base
-    container_name: react-base
+  top-movies:
+    image: top-movies
+    container_name: top-movies
     build:
       dockerfile: docker/dev/Dockerfile
       context: .
@@ -14,8 +14,8 @@ services:
       - "${PWD}:/app"
       - "/app/node_modules"
     networks:
-      - react-base
+      - top-movies
 
 networks:
-  react-base:
+  top-movies:
     external: true

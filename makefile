@@ -1,4 +1,4 @@
-CONTAINER_NAME=react-base
+CONTAINER_NAME=top-movies
 
 # build image
 build:

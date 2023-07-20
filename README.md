@@ -18,11 +18,11 @@
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
 
-# 🔍 React Base
+# 🔍 Top Movies
 
-## 🌐 [react-base.netlify.app/](https://react-base.netlify.app/)
-![example workflow](https://github.com/luizclr/react-base/actions/workflows/main.yml/badge.svg)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/3686df98-70c6-43be-bb8b-f5f7b5b238c9/deploy-status)](https://app.netlify.com/sites/react-base/deploys)
+## 🌐 [top-movies-react-app.netlify.app/](https://top-movies-react-app.netlify.app/)
+![example workflow](https://github.com/luizclr/top-movies/actions/workflows/main.yml/badge.svg)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3686df98-70c6-43be-bb8b-f5f7b5b238c9/deploy-status)](https://app.netlify.com/sites/top-movies/deploys)
 
 
 ## 📖 Tabe of contents

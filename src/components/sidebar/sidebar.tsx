@@ -17,7 +17,7 @@ export const BaseSidebar: React.FC<BaseSidebarProps> = ({
 }: BaseSidebarProps) => {
   return (
     <SidebarWrapper data-testid="sidebar">
-      <Text>React Base</Text>
+      <Text>Top Movies</Text>
       <SidebarContent>
         <List>
           <ListItem>
