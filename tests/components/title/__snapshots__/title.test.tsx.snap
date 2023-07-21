@@ -3,7 +3,7 @@
 exports[`<Title /> should be able to mount <Title /> component 1`] = `
 <DocumentFragment>
   .c0 {
-  font-size: 32pt;
+  font-size: 32px;
   color: #1c1c1c;
 }
 
