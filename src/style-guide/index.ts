@@ -4,15 +4,15 @@ const initialStyleGuide: StyledGuideProps = {
   styleGuide: {
     colors: {
       primary: {
-        darkest: "#00272e",
-        darker: "#004e5c",
-        dark: "#01768b",
-        tinyDark: "#019db9",
-        medium: "#01c4e7",
-        tinyLight: "#34d0ec",
-        light: "#67dcf1",
-        lighter: "#99e7f5",
-        lightest: "#ccf3fa",
+        darkest: "#861040",
+        darker: "#a12759",
+        dark: "#b82d66",
+        tinyDark: "#cf3373",
+        medium: "#E73980",
+        tinyLight: "#e94c8c",
+        light: "#eb6099",
+        lighter: "#ee74a6",
+        lightest: "#f088b2",
       },
       secondary: {
         darkest: "#301405",
