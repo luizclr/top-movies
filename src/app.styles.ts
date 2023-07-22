@@ -6,7 +6,6 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    transition: color 0.3s, background-color 0.3s;
   }
 
   html,

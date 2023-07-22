@@ -29,7 +29,6 @@ export const TopContainer = styled(BaseContainer)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  transition: none;
   justify-content: space-between;
 `;
 
@@ -79,7 +78,6 @@ export const BottomContainer = styled(BaseContainer)`
   display: flex;
   align-items: center;
   padding: ${getSize(({ m }) => m)} 0;
-  transition: none;
   text-align: center;
 `;
 
