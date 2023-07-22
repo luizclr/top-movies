@@ -1,4 +1,3 @@
-import { getSize } from "react-styled-guide";
 import styled from "styled-components";
 
 export const BaseWrapper = styled.div`
@@ -11,5 +10,4 @@ export const BaseWrapper = styled.div`
 export const BaseContent = styled.div`
   width: 100%;
   height: 100%;
-  padding: ${getSize(({ xxs }) => xxs)};
 `;
