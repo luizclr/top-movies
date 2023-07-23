@@ -1,7 +1,6 @@
-import { PropsWithChildren } from "react";
-
 import { Title as BaseTitle } from "~/components/title/title.styles";
+import { Props } from "~/components/title/types";
 
-export const Title: React.FC<PropsWithChildren> = ({ children }: PropsWithChildren) => (
-  <BaseTitle>{children}</BaseTitle>
+export const Title: React.FC<Props> = ({ children, inverted = false }: Props) => (
+  <BaseTitle inverted={inverted}>{children}</BaseTitle>
 );
