@@ -25,6 +25,8 @@ const GlobalStyle = createGlobalStyle`
 
   &::-webkit-scrollbar {
     width: ${getSize(({ nano }) => nano)};
+    border-radius: ${getSize(({ quark }) => quark)};
+    height: ${getSize(({ nano }) => nano)};
   }
 
   &::-webkit-scrollbar-thumb {
@@ -34,14 +36,17 @@ const GlobalStyle = createGlobalStyle`
       ({ neutral }) => neutral.light
     )};
     width: ${getSize(({ nano }) => nano)};
+    height: ${getSize(({ nano }) => nano)};
   }
 
   &::-webkit-scrollbar-track {
+    border-radius: ${getSize(({ quark }) => quark)};
     background: ${getColorByTheme(
       ({ neutral }) => neutral.light,
       ({ neutral }) => neutral.tinyDark
     )};
     width: ${getSize(({ nano }) => nano)};
+    height: ${getSize(({ nano }) => nano)};
   }
 `;
 
