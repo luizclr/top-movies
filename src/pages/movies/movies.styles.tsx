@@ -6,11 +6,6 @@ export const FilterContainer = styled.div`
     ({ primary }) => primary.darkest,
     ({ neutral }) => neutral.darker
   )};
-  border-bottom: 1px solid
-    ${getColorByTheme(
-      ({ primary }) => primary.darkest,
-      ({ neutral }) => neutral.darker
-    )};
   color: ${getColorByTheme(
     ({ neutral }) => neutral.lightest,
     ({ neutral }) => neutral.darkest
