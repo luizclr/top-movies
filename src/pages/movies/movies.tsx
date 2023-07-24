@@ -1,4 +1,5 @@
 import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel } from "~/components/card-list/types";
@@ -13,6 +14,7 @@ import GlobalContext from "~/state/global/context";
 const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
 
 const Movies: React.FC = () => {
+  const navigate = useNavigate();
   const { moviesService } = useContext(GlobalContext);
   const { setIsLoading } = useApp();
 
@@ -93,7 +95,7 @@ const Movies: React.FC = () => {
         </Container>
       </FilterContainer>
       <Container data-testid="movies">
-        <CardList list={movies} />
+        <CardList onCardClick={(item) => navigate(`/movies/${item.id}`)} list={movies} />
       </Container>
     </div>
   );

@@ -16,13 +16,14 @@ export const CardList: React.FC<Props> = ({
   horizontal = false,
   scroll = false,
   size = CardSize.md,
+  onCardClick = () => {},
 }: Props) => {
   const renderItem = (): ReactElement => {
     return (
       <>
         {list.map((item) => (
           <CardListItemWrapper key={item.id}>
-            <CardListItem size={size} scroll={scroll}>
+            <CardListItem onClick={() => onCardClick(item)} size={size} scroll={scroll}>
               <Image src={item.imgURL} />
               <Title>{item.title}</Title>
               <Subtitle>{item.subtitle}</Subtitle>

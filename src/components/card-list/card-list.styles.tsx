@@ -41,6 +41,10 @@ const CardListItemScrolled = css<{ size: CardSize }>`
 
 export const CardListItem = styled.div<{ scroll: boolean; size: CardSize }>`
   ${({ scroll }) => (scroll ? CardListItemScrolled : CardListItemNotScrolled)}
+
+  :hover {
+    cursor: pointer;
+  }
 `;
 
 export const Image = styled.img`

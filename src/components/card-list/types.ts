@@ -13,6 +13,7 @@ export enum CardSize {
 
 export type Props = {
   list: CardListItemModel[];
+  onCardClick?: (item: CardListItemModel) => void;
   horizontal?: boolean;
   scroll?: boolean;
   size?: CardSize;
