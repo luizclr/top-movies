@@ -5,7 +5,9 @@ import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
 import { Title } from "~/components/title/title.styles";
 import { Video } from "~/components/video/video";
+import { Pagination } from "~/data/services/movies/types";
 import { EntireMovie } from "~/entities/entire-movie";
+import { PartialMovie } from "~/entities/partial-movie";
 import {
   Container,
   DirectingContainer,
@@ -106,72 +108,63 @@ const initialCast: CardListItemModel[] = [
     subtitle: "Margot",
   },
 ];
-const initialRelated: CardListItemModel[] = [
-  {
-    id: 1,
-    imgURL: "https://image.tmdb.org/t/p/w200/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    title: "Missão: Impossível",
-    subtitle: "2023",
-  },
-  {
-    id: 2,
-    imgURL: "https://image.tmdb.org/t/p/w200/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    title: "Missão: Impossível",
-    subtitle: "2023",
-  },
-  {
-    id: 3,
-    imgURL: "https://image.tmdb.org/t/p/w200/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    title: "Missão: Impossível",
-    subtitle: "2023",
-  },
-  {
-    id: 4,
-    imgURL: "https://image.tmdb.org/t/p/w200/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    title: "Missão: Impossível",
-    subtitle: "2023",
-  },
-  {
-    id: 5,
-    imgURL: "https://image.tmdb.org/t/p/w200/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    title: "Missão: Impossível",
-    subtitle: "2023",
-  },
-  {
-    id: 6,
-    imgURL: "https://image.tmdb.org/t/p/w200/NNxYkU70HPurnNCSiCjYAmacwm.jpg",
-    title: "Missão: Impossível",
-    subtitle: "2023",
-  },
-];
 
+// eslint-disable-next-line max-lines-per-function
 const Movie: React.FC = () => {
   const { id } = useParams();
   const { moviesService } = useContext(GlobalContext);
   const { setIsLoading } = useApp();
 
-  const [, setMovieId] = useState<number | null>(null);
+  const [movieId, setMovieId] = useState<number | null>(null);
   const [movie, setMovie] = useState<EntireMovie | null>(null);
   const [directing] = useState<Directing[]>(initialDirecting);
   const [cast] = useState<CardListItemModel[]>(initialCast);
-  const [related] = useState<CardListItemModel[]>(initialRelated);
+  const [recommendations, setRecommendations] = useState<CardListItemModel[]>([]);
   const [videoKey] = useState<string>("kXolXtsjSF8");
 
   useEffect(() => {
     if (id) {
       setMovieId(parseInt(id));
-      getMovie(parseInt(id)).catch(() => setIsLoading(false));
     }
   }, []);
 
-  const getMovie = async (id: number): Promise<void> => {
+  useEffect(() => {
+    Promise.all([getMovie(), getRecommendations()]).catch(() => setIsLoading(false));
+  }, [movieId]);
+
+  const getRecommendations = async (): Promise<void> => {
+    if (!movieId) return;
+
+    await moviesService.getRecommendations(movieId, {
+      onSuccess: onMoviesSuccess,
+      onError: () => {},
+    });
+  };
+
+  const onMoviesSuccess = (movies: Pagination<PartialMovie>): void => {
+    const parsedRecommendationsPagination: CardListItemModel[] = movies.results
+      .slice(0, 6)
+      .map((movie) => ({
+        id: movie.id,
+        imgURL: `${process.env.MOVIES_IMAGES_URL}/w200${movie.poster_path}`,
+        title: movie.title,
+        subtitle: movie.release_date,
+      }));
+
+    setRecommendations(parsedRecommendationsPagination);
+    setIsLoading(false);
+  };
+
+  const getMovie = async (): Promise<void> => {
+    if (!movieId) return;
+
     setIsLoading(true);
     const onSuccess = (movie: EntireMovie): void => {
       setMovie(movie);
       setIsLoading(false);
     };
 
-    await moviesService.getMovieById(id, {
+    await moviesService.getMovieById(movieId, {
       onSuccess,
       onError: () => setIsLoading(false),
     });
@@ -234,7 +227,7 @@ const Movie: React.FC = () => {
           <Title>Trailer</Title>
           <Video videoKey={videoKey} />
           <Title>Recomendações</Title>
-          <CardList size={CardSize.sm} list={related} />
+          <CardList hasDateSubtitle={true} size={CardSize.sm} list={recommendations} />
         </MediaWrapper>
       </Container>
     </div>

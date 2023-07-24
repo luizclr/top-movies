@@ -5,10 +5,12 @@ import {
   GetMovieByIdListeners,
   GetMoviesByGenreListeners,
   GetMoviesListeners,
+  GetRecommendationsListeners,
 } from "~/data/services/movies/types";
 import { GetGenresResponseDTO } from "~/infra/services/movies/dto/get-genres-response";
 import { GetMovieByIdResponseDTO } from "~/infra/services/movies/dto/get-movie-by-id-response";
 import { GetMoviesByGenreResponseDTO } from "~/infra/services/movies/dto/get-movies-by-genre-response";
+import { GetRecommendationsResponseDTO } from "~/infra/services/movies/dto/get-recommendations-response";
 
 export default class AppMoviesService implements MoviesService {
   private readonly moviesUrl = "/movie/popular?language=pt-BR";
@@ -73,6 +75,24 @@ export default class AppMoviesService implements MoviesService {
       const movie = await response.getData(GetMovieByIdResponseDTO.parse);
 
       listeners.onSuccess(movie);
+    } catch {
+      listeners.onError();
+    }
+  }
+
+  public async getRecommendations(
+    id: number,
+    listeners: GetRecommendationsListeners
+  ): Promise<void> {
+    try {
+      const response = await this.httpClient.request({
+        url: `/movie/${id}/recommendations?language=pt-BR`,
+        method: "get",
+      });
+
+      const movies = await response.getData(GetRecommendationsResponseDTO.parse);
+
+      listeners.onSuccess(movies);
     } catch {
       listeners.onError();
     }

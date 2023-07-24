@@ -15,7 +15,7 @@ export type GetGenresListeners = {
 };
 
 export type GetMoviesByGenreListeners = {
-  onSuccess: (genres: Pagination<PartialMovie>) => void;
+  onSuccess: (movies: Pagination<PartialMovie>) => void;
   onError: () => void;
 };
 
@@ -25,6 +25,11 @@ export type GetMovieByIdListeners = {
 };
 
 export type GetMoviesListeners = {
-  onSuccess: (genres: Pagination<PartialMovie>) => void;
+  onSuccess: (movies: Pagination<PartialMovie>) => void;
+  onError: () => void;
+};
+
+export type GetRecommendationsListeners = {
+  onSuccess: (movies: Pagination<PartialMovie>) => void;
   onError: () => void;
 };

@@ -11,8 +11,6 @@ import { Description, FilterContainer, List, ListItem, Text } from "~/pages/movi
 import { useApp } from "~/state/app/hook";
 import GlobalContext from "~/state/global/context";
 
-const months = ["JAN", "FEV", "MAR", "ABR", "MAI", "JUN", "JUL", "AGO", "SET", "OUT", "NOV", "DEZ"];
-
 const Movies: React.FC = () => {
   const navigate = useNavigate();
   const { moviesService } = useContext(GlobalContext);
@@ -60,17 +58,11 @@ const Movies: React.FC = () => {
       id: movie.id,
       imgURL: `${process.env.MOVIES_IMAGES_URL}/w200${movie.poster_path}`,
       title: movie.title,
-      subtitle: formatDate(movie.release_date),
+      subtitle: movie.release_date,
     }));
 
     setMovies(parsedMoviesPagination);
     setIsLoading(false);
-  };
-
-  const formatDate = (date: string): string => {
-    const dateObject = new Date(date);
-
-    return `${dateObject.getDate()} ${months[dateObject.getMonth()]} ${dateObject.getFullYear()}`;
   };
 
   return (

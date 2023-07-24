@@ -17,4 +17,5 @@ export type Props = {
   horizontal?: boolean;
   scroll?: boolean;
   size?: CardSize;
+  hasDateSubtitle?: boolean;
 };
