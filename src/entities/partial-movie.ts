@@ -1,4 +1,4 @@
-export class Movie {
+export class PartialMovie {
   public constructor(
     public id: number,
     public adult: boolean,

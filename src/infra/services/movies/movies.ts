@@ -2,10 +2,12 @@ import { HttpClient } from "~/data/http/http-client";
 import { MoviesService } from "~/data/services/movies/movies-service";
 import {
   GetGenresListeners,
+  GetMovieByIdListeners,
   GetMoviesByGenreListeners,
   GetMoviesListeners,
 } from "~/data/services/movies/types";
 import { GetGenresResponseDTO } from "~/infra/services/movies/dto/get-genres-response";
+import { GetMovieByIdResponseDTO } from "~/infra/services/movies/dto/get-movie-by-id-response";
 import { GetMoviesByGenreResponseDTO } from "~/infra/services/movies/dto/get-movies-by-genre-response";
 
 export default class AppMoviesService implements MoviesService {
@@ -56,6 +58,21 @@ export default class AppMoviesService implements MoviesService {
       const movies = await response.getData(GetMoviesByGenreResponseDTO.parse);
 
       listeners.onSuccess(movies);
+    } catch {
+      listeners.onError();
+    }
+  }
+
+  public async getMovieById(id: number, listeners: GetMovieByIdListeners): Promise<void> {
+    try {
+      const response = await this.httpClient.request({
+        url: `/movie/${id}?language=pt-BR`,
+        method: "get",
+      });
+
+      const movie = await response.getData(GetMovieByIdResponseDTO.parse);
+
+      listeners.onSuccess(movie);
     } catch {
       listeners.onError();
     }

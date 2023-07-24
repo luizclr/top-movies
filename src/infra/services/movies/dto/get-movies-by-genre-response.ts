@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const MovieDTO = z.object({
+export const ParcialMovieDTO = z.object({
   id: z.number(),
   adult: z.boolean(),
   backdrop_path: z.string(),
@@ -19,7 +19,7 @@ export const MovieDTO = z.object({
 
 export const GetMoviesByGenreResponseDTO = z.object({
   page: z.number(),
-  results: z.array(MovieDTO),
+  results: z.array(ParcialMovieDTO),
   total_pages: z.number(),
   total_results: z.number(),
 });

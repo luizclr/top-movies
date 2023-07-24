@@ -1,9 +1,11 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
 import { Title } from "~/components/title/title.styles";
 import { Video } from "~/components/video/video";
+import { EntireMovie } from "~/entities/entire-movie";
 import {
   Container,
   DirectingContainer,
@@ -19,29 +21,37 @@ import {
   Sinopse,
   Value,
 } from "~/pages/movie/movie.styles";
+import { useApp } from "~/state/app/hook";
+import GlobalContext from "~/state/global/context";
 
 type Directing = {
+  id: number;
   name: string;
   role: string;
 };
 const initialDirecting: Directing[] = [
   {
+    id: 1,
     name: "Will Smith",
     role: "Director",
   },
   {
+    id: 2,
     name: "Will Smith",
     role: "Director",
   },
   {
+    id: 3,
     name: "Will Smith",
     role: "Director",
   },
   {
+    id: 4,
     name: "Will Smith",
     role: "Director",
   },
   {
+    id: 5,
     name: "Will Smith",
     role: "Director",
   },
@@ -136,44 +146,87 @@ const initialRelated: CardListItemModel[] = [
 ];
 
 const Movie: React.FC = () => {
+  const { id } = useParams();
+  const { moviesService } = useContext(GlobalContext);
+  const { setIsLoading } = useApp();
+
+  const [, setMovieId] = useState<number | null>(null);
+  const [movie, setMovie] = useState<EntireMovie | null>(null);
   const [directing] = useState<Directing[]>(initialDirecting);
   const [cast] = useState<CardListItemModel[]>(initialCast);
   const [related] = useState<CardListItemModel[]>(initialRelated);
   const [videoKey] = useState<string>("kXolXtsjSF8");
 
+  useEffect(() => {
+    if (id) {
+      setMovieId(parseInt(id));
+      getMovie(parseInt(id)).catch(() => setIsLoading(false));
+    }
+  }, []);
+
+  const getMovie = async (id: number): Promise<void> => {
+    setIsLoading(true);
+    const onSuccess = (movie: EntireMovie): void => {
+      setMovie(movie);
+      setIsLoading(false);
+    };
+
+    await moviesService.getMovieById(id, {
+      onSuccess,
+      onError: () => setIsLoading(false),
+    });
+  };
+
+  const getGenres = (movie: EntireMovie): string => {
+    return movie.genres.map((genre) => genre.name).join(", ");
+  };
+
+  const getDuration = (time: number): string => {
+    const hours = Math.floor(time / 60);
+    const minutes = time % 60;
+
+    return `${hours}h ${minutes}m`;
+  };
+
+  const getDate = (date: string): string => {
+    const parsedDate = new Date(date);
+    const day = (parsedDate.getDate() + 1).toString().padStart(2, "0");
+    const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+    const year = parsedDate.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  };
+
   return (
     <div data-testid="movie">
-      <Header>
-        <Container>
-          <ImageWrapper>
-            <Image src="https://image.tmdb.org/t/p/w300/NNxYkU70HPurnNCSiCjYAmacwm.jpg" />
-          </ImageWrapper>
-          <InfoWrapper>
-            <InfoTitle inverted>Mission: Impossible (2023)</InfoTitle>
-            <MainInfo>
-              16 anos - 10/10/2023 (BR) - Ação, Aventura, Ficção científica - 2h 10m
-            </MainInfo>
-            <Sinopse>Sinopse</Sinopse>
-            <Value>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
-              has been the standard dummy text ever since the 1500s, when an unknown printer took a
-              galley of type and scrambled it to make a type specimen book. It has survived not only
-              five centuries, but also the leap into electronic typesetting, remaining essentially
-              unchanged. It was popularised in the 1960s with the release of Letraset sheets
-              containing Lorem Ipsum passages, and more recently with desktop publishing software
-              like Aldus PageMaker including versions of Lorem Ipsum.
-            </Value>
-            <DirectingContainer>
-              {directing.map((item) => (
-                <DirectingItem key={item.name}>
-                  <Label>{item.name}</Label>
-                  <Value>{item.role}</Value>
-                </DirectingItem>
-              ))}
-            </DirectingContainer>
-          </InfoWrapper>
-        </Container>
-      </Header>
+      {movie && (
+        <Header>
+          <Container>
+            <ImageWrapper>
+              <Image src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} />
+            </ImageWrapper>
+            <InfoWrapper>
+              <InfoTitle inverted>
+                {movie.title} ({new Date(movie.release_date).getFullYear()})
+              </InfoTitle>
+              <MainInfo>
+                16 anos - {getDate(movie.release_date)} (BR) - {getGenres(movie)} -{" "}
+                {getDuration(movie.runtime)}
+              </MainInfo>
+              <Sinopse>Sinopse</Sinopse>
+              <Value>{movie.overview}</Value>
+              <DirectingContainer>
+                {directing.map((item) => (
+                  <DirectingItem key={item.id}>
+                    <Label>{item.name}</Label>
+                    <Value>{item.role}</Value>
+                  </DirectingItem>
+                ))}
+              </DirectingContainer>
+            </InfoWrapper>
+          </Container>
+        </Header>
+      )}
       <Container>
         <MediaWrapper>
           <Title>Elenco</Title>

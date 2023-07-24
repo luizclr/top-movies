@@ -6,7 +6,7 @@ import { CardListItemModel } from "~/components/card-list/types";
 import { Container } from "~/components/container/container";
 import { Pagination } from "~/data/services/movies/types";
 import { Genre } from "~/entities/genre";
-import { Movie } from "~/entities/movie";
+import { PartialMovie } from "~/entities/partial-movie";
 import { Description, FilterContainer, List, ListItem, Text } from "~/pages/movies/movies.styles";
 import { useApp } from "~/state/app/hook";
 import GlobalContext from "~/state/global/context";
@@ -55,7 +55,7 @@ const Movies: React.FC = () => {
     });
   };
 
-  const onMoviesSuccess = (movies: Pagination<Movie>): void => {
+  const onMoviesSuccess = (movies: Pagination<PartialMovie>): void => {
     const parsedMoviesPagination: CardListItemModel[] = movies.results.map((movie) => ({
       id: movie.id,
       imgURL: `${process.env.MOVIES_IMAGES_URL}/w200${movie.poster_path}`,

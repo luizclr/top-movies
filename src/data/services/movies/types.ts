@@ -1,5 +1,6 @@
+import { EntireMovie } from "~/entities/entire-movie";
 import { Genre } from "~/entities/genre";
-import { Movie } from "~/entities/movie";
+import { PartialMovie } from "~/entities/partial-movie";
 
 export type Pagination<T> = {
   page: number;
@@ -14,11 +15,16 @@ export type GetGenresListeners = {
 };
 
 export type GetMoviesByGenreListeners = {
-  onSuccess: (genres: Pagination<Movie>) => void;
+  onSuccess: (genres: Pagination<PartialMovie>) => void;
+  onError: () => void;
+};
+
+export type GetMovieByIdListeners = {
+  onSuccess: (movie: EntireMovie) => void;
   onError: () => void;
 };
 
 export type GetMoviesListeners = {
-  onSuccess: (genres: Pagination<Movie>) => void;
+  onSuccess: (genres: Pagination<PartialMovie>) => void;
   onError: () => void;
 };
