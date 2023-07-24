@@ -17,6 +17,10 @@ export type CastResponseType = {
   crew: Crew[];
 };
 
+export type Options = {
+  page?: number;
+};
+
 export type GetGenresListeners = {
   onSuccess: (genres: Genre[]) => void;
   onError: () => void;

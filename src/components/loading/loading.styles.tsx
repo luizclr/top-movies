@@ -12,7 +12,7 @@ export const Background = styled.div<LoadingProps>`
   align-items: center;
   background-color: rgba(0, 0, 0, 0.466);
   flex-direction: column;
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
 `;

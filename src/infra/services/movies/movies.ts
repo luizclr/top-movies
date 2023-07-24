@@ -36,15 +36,17 @@ export default class AppMoviesService implements MoviesService {
 
   public async getMoviesByGenre(
     genreId: number,
+    { page = 1 },
     listeners: GetMoviesByGenreListeners
   ): Promise<void> {
     try {
       const response = await this.httpClient.request({
-        url: `${this.moviesUrl}&with_genres=${genreId}`,
+        url: `${this.moviesUrl}&with_genres=${genreId}&page=${page}`,
         method: "get",
       });
 
       const movies = await response.getData(GetMoviesByGenreResponseDTO.parse);
+      movies.total_pages = 20;
 
       listeners.onSuccess(movies);
     } catch {
@@ -52,14 +54,15 @@ export default class AppMoviesService implements MoviesService {
     }
   }
 
-  public async getMovies(listeners: GetMoviesListeners): Promise<void> {
+  public async getMovies({ page = 1 }, listeners: GetMoviesListeners): Promise<void> {
     try {
       const response = await this.httpClient.request({
-        url: this.moviesUrl,
+        url: `${this.moviesUrl}&page=${page}`,
         method: "get",
       });
 
       const movies = await response.getData(GetMoviesByGenreResponseDTO.parse);
+      movies.total_pages = 20;
 
       listeners.onSuccess(movies);
     } catch {

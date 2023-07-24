@@ -7,7 +7,7 @@ export const Loading: React.FC = () => {
 
   return (
     <Background show={isLoading}>
-      <Text>Loading...</Text>
+      <Text>Carregando...</Text>
       <img src={progressBar} />
     </Background>
   );

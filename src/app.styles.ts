@@ -7,13 +7,14 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     box-sizing: border-box;
   }
-
+  
   html,
   body,
   #root {
     width: 100%;
     height: 100%;
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    scroll-behavior: smooth;
   }
 
   div {
