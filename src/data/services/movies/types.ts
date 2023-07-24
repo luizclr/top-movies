@@ -17,3 +17,8 @@ export type GetMoviesByGenreListeners = {
   onSuccess: (genres: Pagination<Movie>) => void;
   onError: () => void;
 };
+
+export type GetMoviesListeners = {
+  onSuccess: (genres: Pagination<Movie>) => void;
+  onError: () => void;
+};
