@@ -1,3 +1,5 @@
+import { Cast } from "~/entities/cast";
+import { Crew } from "~/entities/crew";
 import { EntireMovie } from "~/entities/entire-movie";
 import { Genre } from "~/entities/genre";
 import { PartialMovie } from "~/entities/partial-movie";
@@ -7,6 +9,12 @@ export type Pagination<T> = {
   results: T[];
   total_pages: number;
   total_results: number;
+};
+
+export type CastResponseType = {
+  id: number;
+  cast: Cast[];
+  crew: Crew[];
 };
 
 export type GetGenresListeners = {
@@ -31,5 +39,10 @@ export type GetMoviesListeners = {
 
 export type GetRecommendationsListeners = {
   onSuccess: (movies: Pagination<PartialMovie>) => void;
+  onError: () => void;
+};
+
+export type GetCastListeners = {
+  onSuccess: (cast: CastResponseType) => void;
   onError: () => void;
 };

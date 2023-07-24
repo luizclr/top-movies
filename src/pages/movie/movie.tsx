@@ -5,7 +5,7 @@ import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
 import { Title } from "~/components/title/title.styles";
 import { Video } from "~/components/video/video";
-import { Pagination } from "~/data/services/movies/types";
+import { CastResponseType, Pagination } from "~/data/services/movies/types";
 import { EntireMovie } from "~/entities/entire-movie";
 import { PartialMovie } from "~/entities/partial-movie";
 import {
@@ -31,83 +31,6 @@ type Directing = {
   name: string;
   role: string;
 };
-const initialDirecting: Directing[] = [
-  {
-    id: 1,
-    name: "Will Smith",
-    role: "Director",
-  },
-  {
-    id: 2,
-    name: "Will Smith",
-    role: "Director",
-  },
-  {
-    id: 3,
-    name: "Will Smith",
-    role: "Director",
-  },
-  {
-    id: 4,
-    name: "Will Smith",
-    role: "Director",
-  },
-  {
-    id: 5,
-    name: "Will Smith",
-    role: "Director",
-  },
-];
-const initialCast: CardListItemModel[] = [
-  {
-    id: 1,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 2,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 3,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 4,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 5,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 6,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 7,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-  {
-    id: 8,
-    imgURL: "https://image.tmdb.org/t/p/w200/euDPyqLnuwaWMHajcU3oZ9uZezR.jpg",
-    title: "Margot Robbie",
-    subtitle: "Margot",
-  },
-];
 
 // eslint-disable-next-line max-lines-per-function
 const Movie: React.FC = () => {
@@ -117,8 +40,8 @@ const Movie: React.FC = () => {
 
   const [movieId, setMovieId] = useState<number | null>(null);
   const [movie, setMovie] = useState<EntireMovie | null>(null);
-  const [directing] = useState<Directing[]>(initialDirecting);
-  const [cast] = useState<CardListItemModel[]>(initialCast);
+  const [directing, setDirecting] = useState<Directing[]>([]);
+  const [cast, setCast] = useState<CardListItemModel[]>([]);
   const [recommendations, setRecommendations] = useState<CardListItemModel[]>([]);
   const [videoKey] = useState<string>("kXolXtsjSF8");
 
@@ -129,7 +52,7 @@ const Movie: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    Promise.all([getMovie(), getRecommendations()]).catch(() => setIsLoading(false));
+    Promise.all([getMovie(), getRecommendations(), getCasts()]).catch(() => setIsLoading(false));
   }, [movieId]);
 
   const getRecommendations = async (): Promise<void> => {
@@ -172,6 +95,37 @@ const Movie: React.FC = () => {
 
   const getGenres = (movie: EntireMovie): string => {
     return movie.genres.map((genre) => genre.name).join(", ");
+  };
+
+  const getCasts = async (): Promise<void> => {
+    if (!movieId) return;
+
+    setIsLoading(true);
+    const onSuccess = (cast: CastResponseType): void => {
+      const parsedCast: CardListItemModel[] = cast.cast
+        .filter((item) => item.profile_path !== null)
+        .map((item) => ({
+          id: item.id,
+          imgURL: `${process.env.MOVIES_IMAGES_URL}/w200${item.profile_path ?? ""}`,
+          title: item.name,
+          subtitle: item.character,
+        }));
+
+      const parsedCrew: Directing[] = cast.crew.slice(0, 5).map((item) => ({
+        id: item.id,
+        name: item.name,
+        role: item.job,
+      }));
+
+      setCast(parsedCast);
+      setDirecting(parsedCrew);
+      setIsLoading(false);
+    };
+
+    await moviesService.getCast(movieId, {
+      onSuccess,
+      onError: () => setIsLoading(false),
+    });
   };
 
   const getDuration = (time: number): string => {

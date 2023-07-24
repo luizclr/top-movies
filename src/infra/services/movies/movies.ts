@@ -1,12 +1,14 @@
 import { HttpClient } from "~/data/http/http-client";
 import { MoviesService } from "~/data/services/movies/movies-service";
 import {
+  GetCastListeners,
   GetGenresListeners,
   GetMovieByIdListeners,
   GetMoviesByGenreListeners,
   GetMoviesListeners,
   GetRecommendationsListeners,
 } from "~/data/services/movies/types";
+import { GetCastsResponseDTO } from "~/infra/services/movies/dto/get-casts-response";
 import { GetGenresResponseDTO } from "~/infra/services/movies/dto/get-genres-response";
 import { GetMovieByIdResponseDTO } from "~/infra/services/movies/dto/get-movie-by-id-response";
 import { GetMoviesByGenreResponseDTO } from "~/infra/services/movies/dto/get-movies-by-genre-response";
@@ -93,6 +95,21 @@ export default class AppMoviesService implements MoviesService {
       const movies = await response.getData(GetRecommendationsResponseDTO.parse);
 
       listeners.onSuccess(movies);
+    } catch {
+      listeners.onError();
+    }
+  }
+
+  public async getCast(id: number, listeners: GetCastListeners): Promise<void> {
+    try {
+      const response = await this.httpClient.request({
+        url: `/movie/${id}/casts?language=pt-BR`,
+        method: "get",
+      });
+
+      const casts = await response.getData(GetCastsResponseDTO.parse);
+
+      listeners.onSuccess(casts);
     } catch {
       listeners.onError();
     }

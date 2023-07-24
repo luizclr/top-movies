@@ -1,4 +1,5 @@
 import {
+  GetCastListeners,
   GetGenresListeners,
   GetMovieByIdListeners,
   GetMoviesByGenreListeners,
@@ -12,4 +13,5 @@ export interface MoviesService {
   getMoviesByGenre: (genreId: number, listeners: GetMoviesByGenreListeners) => Promise<void>;
   getMovieById: (id: number, listeners: GetMovieByIdListeners) => Promise<void>;
   getRecommendations: (id: number, listeners: GetRecommendationsListeners) => Promise<void>;
+  getCast: (id: number, listeners: GetCastListeners) => Promise<void>;
 }
