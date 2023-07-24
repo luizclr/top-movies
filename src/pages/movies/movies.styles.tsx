@@ -1,6 +1,8 @@
 import { getColorByTheme, getFontSize, getFontWeight, getSize } from "react-styled-guide";
 import styled from "styled-components";
 
+import { BaseContainer } from "~/components/container/container.styles";
+
 export const FilterContainer = styled.div`
   background-color: ${getColorByTheme(
     ({ primary }) => primary.darkest,
@@ -83,4 +85,8 @@ export const ListItem = styled.li<{ selected: boolean }>`
   :last-child {
     border: none;
   }
+`;
+
+export const Container = styled(BaseContainer)`
+  padding: ${getSize(({ nano }) => nano)};
 `;

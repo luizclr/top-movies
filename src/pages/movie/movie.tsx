@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
-import { Title } from "~/components/title/title.styles";
 import { Video } from "~/components/video/video";
 import { CastResponseType, Pagination } from "~/data/services/movies/types";
 import { EntireMovie } from "~/entities/entire-movie";
@@ -15,12 +14,14 @@ import {
   Header,
   Image,
   ImageWrapper,
+  InfoContainer,
   InfoTitle,
   InfoWrapper,
   Label,
   MainInfo,
   MediaWrapper,
   Sinopse,
+  Title,
   Value,
 } from "~/pages/movie/movie.styles";
 import { useApp } from "~/state/app/hook";
@@ -149,28 +150,30 @@ const Movie: React.FC = () => {
       {movie && (
         <Header>
           <Container>
-            <ImageWrapper>
-              <Image src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} />
-            </ImageWrapper>
-            <InfoWrapper>
-              <InfoTitle inverted>
-                {movie.title} ({new Date(movie.release_date).getFullYear()})
-              </InfoTitle>
-              <MainInfo>
-                16 anos - {getDate(movie.release_date)} (BR) - {getGenres(movie)} -{" "}
-                {getDuration(movie.runtime)}
-              </MainInfo>
-              <Sinopse>Sinopse</Sinopse>
-              <Value>{movie.overview}</Value>
-              <DirectingContainer>
-                {directing.map((item) => (
-                  <DirectingItem key={item.id}>
-                    <Label>{item.name}</Label>
-                    <Value>{item.role}</Value>
-                  </DirectingItem>
-                ))}
-              </DirectingContainer>
-            </InfoWrapper>
+            <InfoContainer>
+              <ImageWrapper>
+                <Image src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} />
+              </ImageWrapper>
+              <InfoWrapper>
+                <InfoTitle inverted>
+                  {movie.title} ({new Date(movie.release_date).getFullYear()})
+                </InfoTitle>
+                <MainInfo>
+                  16 anos - {getDate(movie.release_date)} (BR) - {getGenres(movie)} -{" "}
+                  {getDuration(movie.runtime)}
+                </MainInfo>
+                <Sinopse>Sinopse</Sinopse>
+                <Value>{movie.overview}</Value>
+                <DirectingContainer>
+                  {directing.map((item) => (
+                    <DirectingItem key={item.id}>
+                      <Label>{item.name}</Label>
+                      <Value>{item.role}</Value>
+                    </DirectingItem>
+                  ))}
+                </DirectingContainer>
+              </InfoWrapper>
+            </InfoContainer>
           </Container>
         </Header>
       )}

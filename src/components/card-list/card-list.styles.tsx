@@ -12,7 +12,7 @@ const getCardSize = (size: CardSize): string => {
 export const HorizontalCardList = styled.ul<{ scroll: boolean }>`
   list-style-type: none;
   display: flex;
-  width: calc(100vw - ${getSize(({ nano }) => nano)});
+  width: calc(100vw - ${getSize(({ xs }) => xs)});
   max-width: 1200px;
   flex-wrap: ${({ scroll }) => (!scroll ? "wrap" : "none")};
   overflow-x: ${({ scroll }) => (scroll ? "scroll" : "none")};
@@ -30,7 +30,7 @@ export const CardListItemWrapper = styled.li`
 `;
 
 const CardListItemNotScrolled = css<{ size: CardSize }>`
-  margin: ${getSize(({ xxs }) => xxs)};
+  margin: ${getSize(({ nano }) => nano)};
   max-width: ${({ size }) => getCardSize(size)};
 `;
 

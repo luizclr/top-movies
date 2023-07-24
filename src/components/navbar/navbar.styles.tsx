@@ -27,6 +27,7 @@ export const TopContainer = styled(BaseContainer)`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  padding: 0 ${getSize(({ xxxs }) => xxxs)};
 `;
 
 export const Title = styled.p`

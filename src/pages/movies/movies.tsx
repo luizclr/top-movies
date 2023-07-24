@@ -3,11 +3,17 @@ import { useNavigate } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel } from "~/components/card-list/types";
-import { Container } from "~/components/container/container";
 import { Pagination } from "~/data/services/movies/types";
 import { Genre } from "~/entities/genre";
 import { PartialMovie } from "~/entities/partial-movie";
-import { Description, FilterContainer, List, ListItem, Text } from "~/pages/movies/movies.styles";
+import {
+  Container,
+  Description,
+  FilterContainer,
+  List,
+  ListItem,
+  Text,
+} from "~/pages/movies/movies.styles";
 import { useApp } from "~/state/app/hook";
 import GlobalContext from "~/state/global/context";
 

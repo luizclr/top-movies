@@ -11,7 +11,11 @@ export const Header = styled.div`
   )};
   color: ${getColor(({ neutral }) => neutral.lightest)};
   padding: ${getSize(({ m }) => m)} 0;
-  margin-bottom: 100px;
+  margin-bottom: ${getSize(({ xxl }) => xxl)};
+
+  @media (max-width: 800px) {
+    margin-bottom: 0;
+  }
 `;
 
 export const Container = styled(BaseContainer)`
@@ -19,14 +23,34 @@ export const Container = styled(BaseContainer)`
   flex-direction: row;
 `;
 
+export const InfoContainer = styled.div`
+  display: flex;
+  padding: 0 ${getSize(({ xxxs }) => xxxs)};
+  background-color: inherit;
+  color: inherit;
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+  }
+`;
+
 export const ImageWrapper = styled.div`
   background-color: inherit;
   min-height: 300px;
+
+  @media (max-width: 800px) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 export const Image = styled.img`
   margin-bottom: -120px;
   border-radius: ${getSize(({ nano }) => nano)};
+
+  @media (max-width: 800px) {
+    margin-bottom: ${getSize(({ xs }) => xs)};
+  }
 `;
 
 export const InfoWrapper = styled.div`
@@ -58,6 +82,10 @@ export const DirectingItem = styled.div`
   }
 `;
 
+export const Title = styled(BaseTitle)`
+  margin-top: ${getSize(({ xxs }) => xxs)};
+`;
+
 export const Label = styled.p`
   margin-top: ${getSize(({ xxxs }) => xxxs)};
   font-weight: ${getFontWeight(({ bold }) => bold)};
@@ -73,5 +101,5 @@ export const Value = styled.p`
 `;
 
 export const MediaWrapper = styled.div`
-  margin-bottom: ${getSize(({ l }) => l)} 0;
+  padding: 0 ${getSize(({ xxxs }) => xxxs)};
 `;

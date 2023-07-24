@@ -1,12 +1,15 @@
 import { Props } from "~/components/video/types";
+import { BaseVideo, IFrame, IFrameContainer } from "~/components/video/video.styles";
 
 export const Video: React.FC<Props> = ({ videoKey }: Props) => (
-  <iframe
-    width="560"
-    height="315"
-    src={`https://www.youtube.com/embed/${videoKey}`}
-    title="YouTube video player"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowFullScreen
-  ></iframe>
+  <BaseVideo>
+    <IFrameContainer>
+      <IFrame
+        src={`https://www.youtube.com/embed/${videoKey}`}
+        title="YouTube video player"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      />
+    </IFrameContainer>
+  </BaseVideo>
 );
