@@ -6,5 +6,6 @@ declare namespace NodeJS {
     BASE_URL: string;
     MOVIES_API: string;
     MOVIES_TOKEN: string;
+    MOVIES_IMAGES_URL: string;
   }
 }
