@@ -4,7 +4,6 @@ import styled from "styled-components";
 export const Flex = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: inherit;
 `;
 
 export const Input = styled.input<{ hasError: boolean }>`
@@ -23,12 +22,12 @@ export const Input = styled.input<{ hasError: boolean }>`
 `;
 
 export const Label = styled.label`
-  font-size: ${getFontSize(({ xxs }) => xxs)};
+  font-size: ${getFontSize(({ xs }) => xs)};
   color: ${getColor(({ neutral }) => neutral.tinyDark)};
 `;
 
 export const Error = styled.p`
-  font-size: ${getFontSize(({ xxxs }) => xxxs)};
+  font-size: ${getFontSize(({ xxs }) => xxs)};
   color: ${getColor(({ error }) => error.light)};
   margin-top: ${getSize(({ quark }) => quark)};
   min-height: ${getSize(({ xxxs }) => xxxs)};

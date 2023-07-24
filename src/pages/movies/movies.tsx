@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel } from "~/components/card-list/types";
 import { Pagination } from "~/components/pagination/pagination";
-import { Pagination as PaginationType } from "~/data/services/movies/types";
+import { Options, Pagination as PaginationType } from "~/data/services/movies/types";
 import { Genre } from "~/entities/genre";
 import { PartialMovie } from "~/entities/partial-movie";
 import {
@@ -31,19 +31,19 @@ const Movies: React.FC = () => {
   });
   const [page, setPage] = useState<number>(0);
   const [genres, setGenres] = useState<Genre[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
+  const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
 
   useEffect(() => {
     setIsLoading(true);
-    Promise.all([getGenres(), getMovies()])
+    Promise.all([getGenres(), getMovies({})])
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
   }, []);
 
   useEffect(() => {
     setIsLoading(true);
-    getMoviesByGenre().catch(() => {});
-  }, [selectedGenre]);
+    getMovies({ page, genres: selectedGenres }).catch(() => setIsLoading(false));
+  }, [selectedGenres]);
 
   const getGenres = async (): Promise<void> => {
     const onSuccess = (genres: Genre[]): void => {
@@ -53,23 +53,12 @@ const Movies: React.FC = () => {
     await moviesService.getGenres({ onSuccess, onError });
   };
 
-  const getMovies = async (page = 0): Promise<void> => {
+  const getMovies = async ({ page = 0, genres = [] }: Options): Promise<void> => {
     setIsLoading(true);
 
-    await moviesService.getMovies({ page: page + 1 }, { onSuccess: onMoviesSuccess, onError });
-  };
-
-  const getMoviesByGenre = async (page = 0): Promise<void> => {
-    setIsLoading(true);
-    if (!selectedGenre) return;
-
-    await moviesService.getMoviesByGenre(
-      selectedGenre,
-      { page: page + 1 },
-      {
-        onSuccess: onMoviesSuccess,
-        onError,
-      }
+    await moviesService.getMovies(
+      { page: page + 1, genres },
+      { onSuccess: onMoviesSuccess, onError }
     );
   };
 
@@ -94,12 +83,17 @@ const Movies: React.FC = () => {
 
   const onPageChange = async (page: number): Promise<void> => {
     setPage(page);
-    if (selectedGenre) {
-      await getMoviesByGenre(page);
-    } else {
-      await getMovies(page);
-    }
+    await getMovies({ page, genres: selectedGenres });
     window.scrollTo(0, 0);
+  };
+
+  const onSelectGenre = (genreId: number): void => {
+    setPage(0);
+    if (selectedGenres.includes(genreId)) {
+      setSelectedGenres(selectedGenres.filter((genre) => genre !== genreId));
+    } else {
+      setSelectedGenres([...selectedGenres, genreId]);
+    }
   };
 
   return (
@@ -112,11 +106,8 @@ const Movies: React.FC = () => {
             {genres.map((item) => (
               <ListItem
                 key={item.id}
-                onClick={() => {
-                  setPage(0);
-                  setSelectedGenre(item.id);
-                }}
-                selected={selectedGenre === item.id}
+                onClick={() => onSelectGenre(item.id)}
+                selected={selectedGenres.includes(item.id)}
               >
                 {item.name}
               </ListItem>

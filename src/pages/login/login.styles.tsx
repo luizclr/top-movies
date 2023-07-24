@@ -2,13 +2,40 @@ import { getColor, getFontSize, getFontWeight, getSize } from "react-styled-guid
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-color: ${getColor(({ success }) => success.medium)};
+  background-color: ${getColor(({ primary }) => primary.dark)};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
   padding: ${getSize(({ xxxs }) => xxxs)};
   color: ${getColor(({ neutral }) => neutral.dark)};
+`;
+
+export const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: ${getSize(({ xxs }) => xxs)};
+`;
+
+export const Name = styled.h1`
+  width: 180px;
+  text-align: center;
+  font-size: ${getFontSize(({ xxxl }) => xxxl)};
+  color: ${getColor(({ neutral }) => neutral.lightest)};
+
+  @media (max-width: 420px) {
+    font-size: ${getFontSize(({ xxl }) => xxl)};
+    width: 130px;
+  }
+`;
+
+export const LogoImg = styled.img`
+  width: 200px;
+
+  @media (max-width: 420px) {
+    width: 100px;
+  }
 `;
 
 export const Card = styled.div`
@@ -28,7 +55,6 @@ export const Title = styled.h2`
 export const ButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
-  background-color: inherit;
 `;
 
 export const Button = styled.button`

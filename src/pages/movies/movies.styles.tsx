@@ -1,4 +1,4 @@
-import { getColorByTheme, getFontSize, getFontWeight, getSize } from "react-styled-guide";
+import { getColor, getColorByTheme, getFontSize, getFontWeight, getSize } from "react-styled-guide";
 import styled from "styled-components";
 
 import { BaseContainer } from "~/components/container/container.styles";
@@ -19,6 +19,7 @@ export const Description = styled.p`
   margin-left: 0 ${getSize(({ xxxs }) => xxxs)};
   font-size: ${getFontSize(({ xxxl }) => xxxl)};
   font-weight: ${getFontWeight(({ medium }) => medium)};
+  color: ${getColor(({ neutral }) => neutral.lightest)};
   max-width: 70%;
   display: flex;
   align-self: center;
@@ -33,6 +34,7 @@ export const Text = styled.p`
   font-size: ${getFontSize(({ s }) => s)};
   font-weight: ${getFontWeight(({ medium }) => medium)};
   padding-top: ${getSize(({ s }) => s)};
+  color: ${getColor(({ neutral }) => neutral.lightest)};
   text-align: center;
 `;
 

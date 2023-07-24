@@ -1,9 +1,19 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, useForm } from "react-hook-form";
 
+import Logo from "~/assets/img/movie.png";
 import { InputFIeld } from "~/components/input-field/input-field";
 import { LoginSchema } from "~/pages/login/login.schema";
-import { Button, ButtonWrapper, Card, Container, Title } from "~/pages/login/login.styles";
+import {
+  Button,
+  ButtonWrapper,
+  Card,
+  Container,
+  LogoContainer,
+  LogoImg,
+  Name,
+  Title,
+} from "~/pages/login/login.styles";
 
 type Props = {
   handleSubmit: (email: string, password: string) => Promise<void>;
@@ -24,6 +34,10 @@ export const Login: React.FC<Props> = (props: Props) => {
 
   return (
     <Container>
+      <LogoContainer>
+        <Name>Top Movies</Name>
+        <LogoImg src={Logo} />
+      </LogoContainer>
       <Card>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Title>Login</Title>

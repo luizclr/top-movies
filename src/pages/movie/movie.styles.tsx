@@ -26,8 +26,6 @@ export const Container = styled(BaseContainer)`
 export const InfoContainer = styled.div`
   display: flex;
   padding: 0 ${getSize(({ xxxs }) => xxxs)};
-  background-color: inherit;
-  color: inherit;
 
   @media (max-width: 800px) {
     flex-direction: column;
@@ -35,7 +33,6 @@ export const InfoContainer = styled.div`
 `;
 
 export const ImageWrapper = styled.div`
-  background-color: inherit;
   min-height: 300px;
 
   @media (max-width: 800px) {
@@ -54,7 +51,6 @@ export const Image = styled.img`
 `;
 
 export const InfoWrapper = styled.div`
-  background-color: inherit;
   padding: 0 ${getSize(({ xs }) => xs)};
 `;
 
@@ -67,13 +63,11 @@ export const MainInfo = styled.p`
 `;
 
 export const DirectingContainer = styled.div`
-  background-color: inherit;
   display: flex;
   flex-wrap: wrap;
 `;
 
 export const DirectingItem = styled.div`
-  background-color: inherit;
   width: 100%;
   max-width: 250px;
 

@@ -4,9 +4,9 @@ import {
   GetCastListeners,
   GetGenresListeners,
   GetMovieByIdListeners,
-  GetMoviesByGenreListeners,
   GetMoviesListeners,
   GetRecommendationsListeners,
+  Options,
 } from "~/data/services/movies/types";
 import { GetCastsResponseDTO } from "~/infra/services/movies/dto/get-casts-response";
 import { GetGenresResponseDTO } from "~/infra/services/movies/dto/get-genres-response";
@@ -34,30 +34,13 @@ export default class AppMoviesService implements MoviesService {
     }
   }
 
-  public async getMoviesByGenre(
-    genreId: number,
-    { page = 1 },
-    listeners: GetMoviesByGenreListeners
+  public async getMovies(
+    { page = 1, genres = [] }: Options,
+    listeners: GetMoviesListeners
   ): Promise<void> {
     try {
       const response = await this.httpClient.request({
-        url: `${this.moviesUrl}&with_genres=${genreId}&page=${page}`,
-        method: "get",
-      });
-
-      const movies = await response.getData(GetMoviesByGenreResponseDTO.parse);
-      movies.total_pages = 20;
-
-      listeners.onSuccess(movies);
-    } catch {
-      listeners.onError();
-    }
-  }
-
-  public async getMovies({ page = 1 }, listeners: GetMoviesListeners): Promise<void> {
-    try {
-      const response = await this.httpClient.request({
-        url: `${this.moviesUrl}&page=${page}`,
+        url: `${this.moviesUrl}&with_genres=${genres.join(",")}&page=${page}`,
         method: "get",
       });
 

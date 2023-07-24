@@ -17,13 +17,6 @@ const GlobalStyle = createGlobalStyle`
     scroll-behavior: smooth;
   }
 
-  div {
-    background-color: ${getColorByTheme(
-      ({ neutral }) => neutral.lightest,
-      ({ neutral }) => neutral.darkest
-    )};
-  }
-
   &::-webkit-scrollbar {
     width: ${getSize(({ nano }) => nano)};
     border-radius: ${getSize(({ quark }) => quark)};

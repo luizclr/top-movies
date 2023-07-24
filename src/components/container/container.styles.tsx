@@ -6,7 +6,6 @@ export const BaseContainer = styled.div`
   flex-direction: column;
   margin-left: auto;
   margin-right: auto;
-  background-color: inherit;
   color: inherit;
 
   @media (min-width: 1200px) {

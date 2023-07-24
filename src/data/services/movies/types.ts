@@ -19,15 +19,11 @@ export type CastResponseType = {
 
 export type Options = {
   page?: number;
+  genres?: number[];
 };
 
 export type GetGenresListeners = {
   onSuccess: (genres: Genre[]) => void;
-  onError: () => void;
-};
-
-export type GetMoviesByGenreListeners = {
-  onSuccess: (movies: Pagination<PartialMovie>) => void;
   onError: () => void;
 };
 
