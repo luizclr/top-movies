@@ -8,14 +8,20 @@ import { isEmpty } from "~/utils";
 export class AxiosAdapter implements HttpClient {
   protected readonly axios: AxiosInstance;
 
-  public constructor(public readonly baseUrl: string) {
+  public constructor(
+    private readonly baseUrl: string,
+    private readonly headers: Record<string, string | number> = {}
+  ) {
     if (isEmpty(baseUrl)) {
       throw new Error("baseUrl is required");
     }
 
     this.axios = axios.create({
       baseURL: baseUrl,
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
     });
   }
 

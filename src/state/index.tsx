@@ -1,4 +1,5 @@
 import { AxiosAdapter } from "~/infra/http/axios-adapter";
+import AppMoviesService from "~/infra/services/movies/movies";
 import { LocalStorageService } from "~/infra/services/storage/local-storage/local-storage";
 import AuthService from "~/services/auth/auth";
 import AppUserService from "~/services/user/user";
@@ -20,11 +21,14 @@ export const initialDispatchesState: DispatchesState = {
 };
 
 // services
-const httpClient = new AxiosAdapter(process.env.BASE_URL);
+const authHttpClient = new AxiosAdapter(process.env.BASE_URL);
+const moviesHeaders = { authorization: `Bearer ${process.env.MOVIES_TOKEN}` };
+const moviesHttpClient = new AxiosAdapter(process.env.MOVIES_API, moviesHeaders);
 
 export const initialServicesState: ServicesTypes = {
-  authService: new AuthService(httpClient),
-  userService: new AppUserService(httpClient),
+  authService: new AuthService(authHttpClient),
+  userService: new AppUserService(authHttpClient),
+  moviesService: new AppMoviesService(moviesHttpClient),
   storageService: new LocalStorageService(),
 };
 

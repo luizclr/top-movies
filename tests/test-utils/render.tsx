@@ -4,9 +4,10 @@ import { ReactElement } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { AxiosAdapter } from "~/infra/http/axios-adapter";
+import AppMoviesService from "~/infra/services/movies/movies";
 import { LocalStorageService } from "~/infra/services/storage/local-storage/local-storage";
-import AuthService from "~/services/auth/auth";
-import UserService from "~/services/user/user";
+import AppAuthService from "~/services/auth/auth";
+import AppUserService from "~/services/user/user";
 import { initialDispatchesState } from "~/state";
 import { GlobalProvider } from "~/state/global/provider";
 import { GlobalProviderProps } from "~/state/global/provider/types";
@@ -17,9 +18,10 @@ import { isNil } from "~/utils";
 const httpClient = new AxiosAdapter("http://www.example.com");
 
 const mockServiceState: ServicesTypes = {
-  authService: new AuthService(httpClient),
+  authService: new AppAuthService(httpClient),
   storageService: new LocalStorageService(),
-  userService: new UserService(httpClient),
+  userService: new AppUserService(httpClient),
+  moviesService: new AppMoviesService(httpClient),
 };
 
 export const initialGlobalProps: GlobalProviderProps = {

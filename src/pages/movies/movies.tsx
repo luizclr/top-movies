@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel } from "~/components/card-list/types";
 import { Container } from "~/components/container/container";
+import { Genre } from "~/entities/genre";
 import { Description, FilterContainer, List, ListItem, Text } from "~/pages/movies/movies.styles";
+import { useApp } from "~/state/app/hook";
+import GlobalContext from "~/state/global/context";
 
 const initialState: CardListItemModel[] = [
   {
@@ -50,11 +53,27 @@ const initialState: CardListItemModel[] = [
   },
 ];
 
-const items: string[] = ["first", "second", "third"];
-
 const Movies: React.FC = () => {
+  const { moviesService } = useContext(GlobalContext);
+  const { setIsLoading } = useApp();
+
   const [movies] = useState<CardListItemModel[]>(initialState);
-  const [selected, setSelected] = useState<string>("second");
+  const [genres, setGenres] = useState<Genre[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState<number | null>(null);
+
+  useEffect(() => {
+    setIsLoading(true);
+    getGenres().catch(() => {});
+  }, []);
+
+  const getGenres = async (): Promise<void> => {
+    const onSuccess = (genres: Genre[]): void => {
+      setGenres(genres);
+      setIsLoading(false);
+    };
+
+    await moviesService.getGenres({ onSuccess, onError: () => {} });
+  };
 
   return (
     <div data-testid="movies">
@@ -63,15 +82,15 @@ const Movies: React.FC = () => {
           <Description>Milhões de filmes, séries e pessoas para descobrir. Explore já.</Description>
           <Text>FILTRE POR:</Text>
           <List>
-            {items.map((item) => (
+            {genres.map((item) => (
               <ListItem
-                key={item}
+                key={item.id}
                 onClick={() => {
-                  setSelected(item);
+                  setSelectedGenre(item.id);
                 }}
-                selected={selected === item}
+                selected={selectedGenre === item.id}
               >
-                {item}
+                {item.name}
               </ListItem>
             ))}
           </List>
