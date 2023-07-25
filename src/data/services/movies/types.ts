@@ -3,6 +3,7 @@ import { Crew } from "~/entities/crew";
 import { EntireMovie } from "~/entities/entire-movie";
 import { Genre } from "~/entities/genre";
 import { PartialMovie } from "~/entities/partial-movie";
+import { Video } from "~/entities/video";
 
 export type Pagination<T> = {
   page: number;
@@ -44,5 +45,10 @@ export type GetRecommendationsListeners = {
 
 export type GetCastListeners = {
   onSuccess: (cast: CastResponseType) => void;
+  onError: () => void;
+};
+
+export type GetVideosListeners = {
+  onSuccess: (videos: Video[]) => void;
   onError: () => void;
 };

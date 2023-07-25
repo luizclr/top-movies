@@ -6,6 +6,7 @@ import {
   GetMovieByIdListeners,
   GetMoviesListeners,
   GetRecommendationsListeners,
+  GetVideosListeners,
   Options,
 } from "~/data/services/movies/types";
 import { GetCastsResponseDTO } from "~/infra/services/movies/dto/get-casts-response";
@@ -13,6 +14,7 @@ import { GetGenresResponseDTO } from "~/infra/services/movies/dto/get-genres-res
 import { GetMovieByIdResponseDTO } from "~/infra/services/movies/dto/get-movie-by-id-response";
 import { GetMoviesByGenreResponseDTO } from "~/infra/services/movies/dto/get-movies-by-genre-response";
 import { GetRecommendationsResponseDTO } from "~/infra/services/movies/dto/get-recommendations-response";
+import { GetVideosResponseDTO } from "~/infra/services/movies/dto/get-videos-response";
 
 export default class AppMoviesService implements MoviesService {
   private readonly moviesUrl = "/movie/popular?language=pt-BR";
@@ -96,6 +98,21 @@ export default class AppMoviesService implements MoviesService {
       const casts = await response.getData(GetCastsResponseDTO.parse);
 
       listeners.onSuccess(casts);
+    } catch {
+      listeners.onError();
+    }
+  }
+
+  public async getVideos(id: number, listeners: GetVideosListeners): Promise<void> {
+    try {
+      const response = await this.httpClient.request({
+        url: `/movie/${id}/videos?language=pt-BR`,
+        method: "get",
+      });
+
+      const { results } = await response.getData(GetVideosResponseDTO.parse);
+
+      listeners.onSuccess(results);
     } catch {
       listeners.onError();
     }

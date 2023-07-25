@@ -4,10 +4,11 @@ import { useParams } from "react-router-dom";
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
 import { Progress } from "~/components/progress/progress";
-import { Video } from "~/components/video/video";
+import { Video as VideoComponent } from "~/components/video/video";
 import { CastResponseType, Pagination } from "~/data/services/movies/types";
 import { EntireMovie } from "~/entities/entire-movie";
 import { PartialMovie } from "~/entities/partial-movie";
+import { Video } from "~/entities/video";
 import {
   Container,
   DirectingContainer,
@@ -47,7 +48,7 @@ const Movie: React.FC = () => {
   const [directing, setDirecting] = useState<Directing[]>([]);
   const [cast, setCast] = useState<CardListItemModel[]>([]);
   const [recommendations, setRecommendations] = useState<CardListItemModel[]>([]);
-  const [videoKey] = useState<string>("kXolXtsjSF8");
+  const [videoKey, setVideoKey] = useState<string>("");
 
   useEffect(() => {
     if (id) {
@@ -56,7 +57,9 @@ const Movie: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    Promise.all([getMovie(), getRecommendations(), getCasts()]).catch(() => setIsLoading(false));
+    Promise.all([getMovie(), getRecommendations(), getCasts(), getVideos()]).catch(() =>
+      setIsLoading(false)
+    );
   }, [movieId]);
 
   const getRecommendations = async (): Promise<void> => {
@@ -132,6 +135,21 @@ const Movie: React.FC = () => {
     });
   };
 
+  const getVideos = async (): Promise<void> => {
+    if (!movieId) return;
+
+    const onSuccess = (videos: Video[]): void => {
+      const key = videos.find((video) => video.type === "Trailer")?.key;
+
+      setVideoKey(key ?? "");
+    };
+
+    await moviesService.getVideos(movieId, {
+      onSuccess,
+      onError: () => {},
+    });
+  };
+
   const getDuration = (time: number): string => {
     const hours = Math.floor(time / 60);
     const minutes = time % 60;
@@ -155,7 +173,7 @@ const Movie: React.FC = () => {
           <Container>
             <InfoContainer>
               <ImageWrapper>
-                <Image src={`https://image.tmdb.org/t/p/w300/${movie.poster_path}`} />
+                <Image src={`${process.env.MOVIES_IMAGES_URL}/w300/${movie.poster_path}`} />
               </ImageWrapper>
               <InfoWrapper>
                 <InfoTitle inverted>
@@ -189,7 +207,7 @@ const Movie: React.FC = () => {
           <Title>Elenco original</Title>
           <CardList size={CardSize.sm} horizontal={true} scroll={true} list={cast} />
           <Title>Trailer</Title>
-          <Video videoKey={videoKey} />
+          <VideoComponent videoKey={videoKey} />
           <Title>Recomendações</Title>
           <CardList hasDateSubtitle={true} size={CardSize.sm} list={recommendations} />
         </MediaWrapper>
