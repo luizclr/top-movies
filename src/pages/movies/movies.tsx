@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel } from "~/components/card-list/types";
@@ -18,32 +18,57 @@ import {
 import { useApp } from "~/state/app/hook";
 import GlobalContext from "~/state/global/context";
 
+const emptyPagination = {
+  page: 0,
+  results: [],
+  total_pages: 0,
+  total_results: 0,
+};
+
+// eslint-disable-next-line max-lines-per-function
 const Movies: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams({});
   const { moviesService } = useContext(GlobalContext);
   const { setIsLoading } = useApp();
 
-  const [movies, setMovies] = useState<PaginationType<CardListItemModel>>({
-    page: 0,
-    results: [],
-    total_pages: 0,
-    total_results: 0,
-  });
+  const [movies, setMovies] = useState<PaginationType<CardListItemModel>>(emptyPagination);
   const [page, setPage] = useState<number>(0);
   const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<number[]>([]);
 
   useEffect(() => {
+    checkParams();
+    getInitialData();
+  }, []);
+
+  useEffect(() => {
+    updateParams();
+    getMovies({ page, genres: selectedGenres }).catch(() => setIsLoading(false));
+  }, [selectedGenres, page]);
+
+  // params and setup
+  const checkParams = (): void => {
+    const initialPage = searchParams.get("page");
+    const initialGenres = searchParams.get("genres");
+
+    if (initialPage) setPage(parseInt(initialPage) - 1);
+    if (initialGenres) setSelectedGenres(initialGenres.split(",").map((item) => parseInt(item)));
+  };
+
+  const updateParams = (): void => {
+    searchParams.set("genres", selectedGenres.map((item) => item.toString()).join(","));
+    searchParams.set("page", (page + 1).toString());
+    setSearchParams(searchParams);
+  };
+
+  // api calls
+  const getInitialData = (): void => {
     setIsLoading(true);
     Promise.all([getGenres(), getMovies({})])
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
-  }, []);
-
-  useEffect(() => {
-    setIsLoading(true);
-    getMovies({ page, genres: selectedGenres }).catch(() => setIsLoading(false));
-  }, [selectedGenres]);
+  };
 
   const getGenres = async (): Promise<void> => {
     const onSuccess = (genres: Genre[]): void => {
@@ -56,31 +81,21 @@ const Movies: React.FC = () => {
   const getMovies = async ({ page = 0, genres = [] }: Options): Promise<void> => {
     setIsLoading(true);
 
-    await moviesService.getMovies(
-      { page: page + 1, genres },
-      { onSuccess: onMoviesSuccess, onError }
-    );
-  };
+    const onSuccess = (movies: PaginationType<PartialMovie>): void => {
+      const results = moviesToCardListItemMapper(movies);
 
-  const onMoviesSuccess = (movies: PaginationType<PartialMovie>): void => {
-    const parsedMovies: CardListItemModel[] = movies.results.map((movie) => ({
-      id: movie.id,
-      imgURL: `${process.env.MOVIES_IMAGES_URL}/w200${movie.poster_path}`,
-      title: movie.title,
-      subtitle: movie.release_date,
-    }));
+      setMovies({ ...movies, results });
+      setIsLoading(false);
+    };
 
-    setMovies({
-      ...movies,
-      results: parsedMovies,
-    });
-    setIsLoading(false);
+    await moviesService.getMovies({ page: page + 1, genres }, { onSuccess, onError });
   };
 
   const onError = (): void => {
     setIsLoading(false);
   };
 
+  // handlers
   const onPageChange = async (page: number): Promise<void> => {
     setPage(page);
     await getMovies({ page, genres: selectedGenres });
@@ -94,6 +109,18 @@ const Movies: React.FC = () => {
     } else {
       setSelectedGenres([...selectedGenres, genreId]);
     }
+  };
+
+  // mappers
+  const moviesToCardListItemMapper = (
+    movies: PaginationType<PartialMovie>
+  ): CardListItemModel[] => {
+    return movies.results.map((movie) => ({
+      id: movie.id,
+      imgURL: `${process.env.MOVIES_IMAGES_URL}/w200${movie.poster_path}`,
+      title: movie.title,
+      subtitle: movie.release_date,
+    }));
   };
 
   return (

@@ -2,7 +2,7 @@
 
 exports[`<Login /> should be able to mount <Login /> component 1`] = `
 <DocumentFragment>
-  .c3 {
+  .c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -10,10 +10,9 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
-  background-color: inherit;
 }
 
-.c5 {
+.c8 {
   padding: 8px;
   border-radius: 4px;
   border: 1px solid #bababa;
@@ -21,28 +20,31 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
   margin-top: 4px;
 }
 
-.c5:focus {
+.c8:focus {
   border-color: #545454;
 }
 
-.c4 {
-  font-size: 12px;
+.c7 {
+  font-size: 14px;
   color: #707070;
 }
 
-.c6 {
-  font-size: 10px;
+.c9 {
+  font-size: 12px;
   color: #ec6666;
   margin-top: 4px;
   min-height: 16px;
 }
 
 .c0 {
-  background-color: #77dd77;
+  background-color: #b82d66;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
@@ -57,6 +59,29 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
 }
 
 .c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.c2 {
+  width: 180px;
+  text-align: center;
+  font-size: 48px;
+  color: #e8e8e8;
+}
+
+.c3 {
+  width: 200px;
+}
+
+.c4 {
   background-color: #fff;
   border-radius: 8px;
   padding: 24px;
@@ -64,13 +89,13 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
   width: 400px;
 }
 
-.c2 {
+.c5 {
   font-size: 18px;
   margin-bottom: 24px;
   color: #545454;
 }
 
-.c7 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -79,10 +104,9 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  background-color: inherit;
 }
 
-.c8 {
+.c11 {
   background-color: #f26419;
   border-radius: 4px;
   padding: 8px;
@@ -94,9 +118,22 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
   width: 50%;
 }
 
-.c8:hover {
+.c11:hover {
   background-color: #c25014;
   cursor: pointer;
+}
+
+@media (max-width:420px) {
+  .c2 {
+    font-size: 32px;
+    width: 130px;
+  }
+}
+
+@media (max-width:420px) {
+  .c3 {
+    width: 100px;
+  }
 }
 
 <div
@@ -105,63 +142,76 @@ exports[`<Login /> should be able to mount <Login /> component 1`] = `
     <div
       class="c1"
     >
+      <h1
+        class="c2"
+      >
+        Top Movies
+      </h1>
+      <img
+        class="c3"
+        src="test-file-stub"
+      />
+    </div>
+    <div
+      class="c4"
+    >
       <form>
         <h2
-          class="c2"
+          class="c5"
         >
           Login
         </h2>
         <div
-          class="c3"
+          class="c6"
         >
           <label
-            class="c4"
+            class="c7"
             data-testid="email-label"
             for="email"
           >
             E-mail
           </label>
           <input
-            class="c5"
+            class="c8"
             data-testid="email-input"
             name="email"
             placeholder="example@example.com"
             type="email"
           />
           <p
-            class="c6"
+            class="c9"
             data-testid="email-error"
             role="form-field-error"
           />
         </div>
         <div
-          class="c3"
+          class="c6"
         >
           <label
-            class="c4"
+            class="c7"
             data-testid="password-label"
             for="password"
           >
             Password
           </label>
           <input
-            class="c5"
+            class="c8"
             data-testid="password-input"
             name="password"
             placeholder="**********"
             type="password"
           />
           <p
-            class="c6"
+            class="c9"
             data-testid="password-error"
             role="form-field-error"
           />
         </div>
         <div
-          class="c7"
+          class="c10"
         >
           <button
-            class="c8"
+            class="c11"
             data-testid="submit"
             type="submit"
           >
