@@ -1,9 +1,9 @@
 import { faker } from "@faker-js/faker";
 
+import { AuthenticateListeners } from "~/data/services/auth/types";
 import { User } from "~/entities/user";
 import { AxiosAdapter } from "~/infra/http/axios-adapter";
-import AuthService from "~/services/auth/auth";
-import { AuthenticateListeners } from "~/services/auth/types";
+import AuthService from "~/infra/services/auth/auth";
 
 import { AuthServiceMock } from "#/services/auth/auth-mock";
 

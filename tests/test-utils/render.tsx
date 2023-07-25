@@ -4,10 +4,10 @@ import { ReactElement } from "react";
 import { BrowserRouter } from "react-router-dom";
 
 import { AxiosAdapter } from "~/infra/http/axios-adapter";
+import AppAuthService from "~/infra/services/auth/auth";
 import AppMoviesService from "~/infra/services/movies/movies";
 import { LocalStorageService } from "~/infra/services/storage/local-storage/local-storage";
-import AppAuthService from "~/services/auth/auth";
-import AppUserService from "~/services/user/user";
+import AppUserService from "~/infra/services/user/user";
 import { initialDispatchesState } from "~/state";
 import { GlobalProvider } from "~/state/global/provider";
 import { GlobalProviderProps } from "~/state/global/provider/types";
