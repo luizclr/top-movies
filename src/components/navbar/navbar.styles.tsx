@@ -30,6 +30,20 @@ export const TopContainer = styled(BaseContainer)`
   padding: 0 ${getSize(({ xxxs }) => xxxs)};
 `;
 
+export const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+export const Logo = styled.img`
+  width: 30px;
+  margin-right: ${getSize(({ quark }) => quark)};
+`;
+
 export const Title = styled.p`
   font-size: ${getFontSize(({ m }) => m)};
   font-weight: ${getFontWeight(({ medium }) => medium)};
