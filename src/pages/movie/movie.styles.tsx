@@ -10,7 +10,7 @@ export const Header = styled.div`
     ({ neutral }) => neutral.darker
   )};
   color: ${getColor(({ neutral }) => neutral.lightest)};
-  padding: ${getSize(({ m }) => m)} 0;
+  padding: ${getSize(({ xs }) => xs)} 0;
   margin-bottom: ${getSize(({ xxl }) => xxl)};
 
   @media (max-width: 800px) {
@@ -60,6 +60,17 @@ export const InfoTitle = styled(BaseTitle)`
 
 export const MainInfo = styled.p`
   font-size: ${getFontSize(({ m }) => m)};
+`;
+
+export const ProgressWrapper = styled.div`
+  margin-top: ${getSize(({ nano }) => nano)};
+  display: flex;
+  align-items: center;
+`;
+
+export const ProgressDescription = styled.p`
+  margin-left: ${getSize(({ xxxs }) => xxxs)};
+  width: ${getSize(({ xxxl }) => xxxl)};
 `;
 
 export const DirectingContainer = styled.div`

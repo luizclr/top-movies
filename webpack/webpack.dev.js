@@ -30,6 +30,10 @@ module.exports = merge(common, {
           configFile: path.join(__dirname, "..", "tsconfig.json"),
         },
       },
+      {
+        test: /\.css?$/i,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
 });

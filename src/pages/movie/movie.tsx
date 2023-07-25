@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
+import { Progress } from "~/components/progress/progress";
 import { Video } from "~/components/video/video";
 import { CastResponseType, Pagination } from "~/data/services/movies/types";
 import { EntireMovie } from "~/entities/entire-movie";
@@ -20,6 +21,8 @@ import {
   Label,
   MainInfo,
   MediaWrapper,
+  ProgressDescription,
+  ProgressWrapper,
   Sinopse,
   Title,
   Value,
@@ -162,6 +165,10 @@ const Movie: React.FC = () => {
                   16 anos - {getDate(movie.release_date)} (BR) - {getGenres(movie)} -{" "}
                   {getDuration(movie.runtime)}
                 </MainInfo>
+                <ProgressWrapper>
+                  <Progress value={60} text={`${Math.floor(movie.vote_average * 10)}`} />
+                  <ProgressDescription>Avaliação dos usuários</ProgressDescription>
+                </ProgressWrapper>
                 <Sinopse>Sinopse</Sinopse>
                 <Value>{movie.overview}</Value>
                 <DirectingContainer>
@@ -179,7 +186,7 @@ const Movie: React.FC = () => {
       )}
       <Container>
         <MediaWrapper>
-          <Title>Elenco</Title>
+          <Title>Elenco original</Title>
           <CardList size={CardSize.sm} horizontal={true} scroll={true} list={cast} />
           <Title>Trailer</Title>
           <Video videoKey={videoKey} />
