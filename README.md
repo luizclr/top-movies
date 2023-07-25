@@ -1,9 +1,3 @@
-# 🚧 work in progress 🚧
-
-> ### **warning**: People are still working here. The features in this repository may not be completed and bugs can be found.
-
-<br/> 
-
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Webpack](https://img.shields.io/badge/webpack-%238DD6F9.svg?style=for-the-badge&logo=webpack&logoColor=black)
 ![Babel](https://img.shields.io/badge/Babel-F9DC3e?style=for-the-badge&logo=babel&logoColor=black)
@@ -24,18 +18,21 @@
 ![example workflow](https://github.com/luizclr/top-movies/actions/workflows/main.yml/badge.svg)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3686df98-70c6-43be-bb8b-f5f7b5b238c9/deploy-status)](https://app.netlify.com/sites/top-movies/deploys)
 
+![Top Movies](/public/top-movies.png "Top Movies")
 
 ## 📖 Tabe of contents
 
 1. [💡 Motivation](#motivation)
     - [Intro](#intro)
+    - [Before starting](#before-starting)
     - [Technologies used](#technologies-used)
-1. [📋 Requirements](#requirements)
-2. [🛠️ Installation and usage](#installation-and-usage)
+2. [📋 Features](#features)
+3. [📋 Requirements](#requirements)
+4. [🛠️ Installation and usage](#installation-and-usage)
     - [Using yarn](#using-yarn)
     - [Using Docker](#using-docker)
-3. [🗂️ Component Structure (general)](#component-structure-general)
-4. [🧑🏻‍💻 Contributing](#contributing)
+5. [🗂️ Component Structure (general)](#component-structure-general)
+6. [🧑🏻‍💻 Contributing](#contributing)
     - [Branch names](#branch-names)
     - [Commit messages](#commit-messages)
 
@@ -43,9 +40,19 @@
 
 ### Intro:
 
-The main objective of this repository is to be used as a template-like to your react projects with many technologies already setted up from scratch.
+The main objective of this repository is create a react application consuming [The movie DB API](https://developer.themoviedb.org/docs/getting-started).
 
-> Fork this repository and start working over it...
+### Before starting
+
+> This project was created based on [luizclr/react-base](https://github.com/luizclr/react-base) template and using [react-styled-guide](https://www.npmjs.com/package/react-styled-guide) package.
+
+> The application is hosted on [top-movies-react-app.netlify.app](https://top-movies-react-app.netlify.app) and you can access any time you want.
+
+> You must create an account on [The movie DB API](https://developer.themoviedb.org/docs/getting-started) to be able to authenticate yourself using a _JWT_ token. For more information check the [authentication docs](https://developer.themoviedb.org/docs/authentication-application). Once you have the _token_, please add it in `MOVIES_TOKEN` variable into `.env` file.
+eg: `MOVIES_TOKEN="your.token.here"`
+
+> This application is using a fake authentication API! It means that you don't need to create any other account. You just need to type any fake e-mail but with a valid format and a random string greater or equal to 8 characters as password.
+eg: `e-mail: example@email.com, password: 12345678`.
 
 ### Technologies used:
 
@@ -77,7 +84,20 @@ The main objective of this repository is to be used as a template-like to your r
 - **Other tools**:
   - Husky ([typicode.github.io/husky](https://typicode.github.io/husky/))
 
+## Features
 
+### Main
+
+- [x] The user has access to a list of the most popular movies of the day
+- [x] User can page through the list to find new movies
+- [x] The user has access to another page with details about the film, when clicking on an item in the listing
+- [x] The user can filter the movies listed by genre, with the possibility of using more than one genre
+- [x] The user can remove filters and the listing must be updated according to the removed filter
+- [x] The user is able to return to the movie listing page with the filters still active
+
+### Extra
+- [x] User can manipulate theme between dark and light
+- [x] User is able to login/logout
 ## Requirements
 
 - NodeJs
