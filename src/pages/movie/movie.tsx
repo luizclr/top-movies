@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { CardList } from "~/components/card-list/card-list";
 import { CardListItemModel, CardSize } from "~/components/card-list/types";
@@ -39,6 +39,7 @@ type Directing = {
 
 // eslint-disable-next-line max-lines-per-function
 const Movie: React.FC = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
   const { moviesService } = useContext(GlobalContext);
   const { setIsLoading } = useApp();
@@ -54,7 +55,7 @@ const Movie: React.FC = () => {
     if (id) {
       setMovieId(parseInt(id));
     }
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     Promise.all([getMovie(), getRecommendations(), getCasts(), getVideos()]).catch(() =>
@@ -209,7 +210,12 @@ const Movie: React.FC = () => {
           <Title>Trailer</Title>
           <VideoComponent videoKey={videoKey} />
           <Title>Recomendações</Title>
-          <CardList hasDateSubtitle={true} size={CardSize.sm} list={recommendations} />
+          <CardList
+            hasDateSubtitle={true}
+            onCardClick={(item) => navigate(`/movies/${item.id}`)}
+            size={CardSize.sm}
+            list={recommendations}
+          />
         </MediaWrapper>
       </Container>
     </div>
