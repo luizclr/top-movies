@@ -44,7 +44,9 @@ export const ActionsWrapper = styled.ul`
 export const ActionItem = styled.li`
   font-size: ${getFontSize(({ m }) => m)};
   font-weight: ${getFontWeight(({ medium }) => medium)};
-  padding: ${getSize(({ xxxs }) => xxxs)};
+  padding: ${getSize(({ nano }) => nano)};
+  display: flex;
+  align-items: center;
 
   :hover {
     cursor: pointer;
