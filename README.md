@@ -157,6 +157,11 @@ yarn start
 
 ### Using Docker
 
+create a docker network:
+```shell
+docker network create top-movies
+```
+
 build image:
 ```shell
 make build
